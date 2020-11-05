@@ -35,7 +35,7 @@ int LNext(List * plist, LData * pdata)
 	if(plist->curPosition >= (plist->numOfData)-1)
 		return FALSE;
 
-	(plist->curPosition)++;
+	(plist->curPosition)++;	
 	*pdata = plist->arr[plist->curPosition];
 	return TRUE;
 }
