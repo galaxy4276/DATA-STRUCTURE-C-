@@ -10,6 +10,11 @@ void ListInit(List *plist)
   plist->numOfData = 0;
 }
 
+void SetSortRule(List *plist, int (*comp)(LData d1, LData d2))
+{
+  plist->comp = comp;
+}
+
 void FInsert(List *plist, LData data)
 {
   Node *newNode = (Node *)malloc(sizeof(Node));
@@ -21,18 +26,30 @@ void FInsert(List *plist, LData data)
   (plist->numOfData)++;
 }
 
+void SInsert(List *plist, LData data)
+{
+  Node *newNode = (Node *)malloc(sizeof(Node));
+  Node *pred = plist->head; // pointing Dummy Node
+
+  newNode->data = data;
+  while (pred->next != NULL && plist->comp(data, pred->next->data) != 0)
+  {
+    pred = pred->next;
+  }
+
+  newNode->next = pred->next;
+  pred->next = newNode;
+
+  (plist->numOfData)++;
+}
+
 void LInsert(List *plist, LData data)
 {
   if (plist->comp == NULL)
     FInsert(plist, data);
-  // else
-  // SInsert(plist, data);
+  else
+    SInsert(plist, data);
 }
-
-// void SInsert(List *plist, LData data)
-// {
-//   //
-// }
 
 int LFirst(List *plist, LData *pdata)
 {

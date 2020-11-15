@@ -3,18 +3,24 @@
 #include "DLinkedList.h"
 #include "DLinkedList.c"
 
+int WhoIsPrecede(int d1, int d2)
+{
+  return (d1 < d2) ? 0 : 1;
+}
+
 int main(void)
 {
   List list;
   int data;
   ListInit(&list);
+  SetSortRule(&list, WhoIsPrecede);
 
   // Save 5 data
-  LInsert(&list, 11);
-  LInsert(&list, 22);
   LInsert(&list, 33);
-  LInsert(&list, 44);
+  LInsert(&list, 22);
+  LInsert(&list, 11);
   LInsert(&list, 55);
+  LInsert(&list, 44);
 
   printf("Count of Data: %d \n", LCount(&list));
 
