@@ -27,11 +27,15 @@ int main(void)
     newNode->data = readData;
     newNode->next = NULL;
 
-    if (head == NULL) // 첫번 째 노드라면
+    if (head == NULL)
+    {
       head = newNode;
+    }
     else
-      tail->next = newNode;
-    tail = newNode;
+    {
+      newNode->next = head;
+      head = newNode;
+    }
   }
   printf("\n");
 
