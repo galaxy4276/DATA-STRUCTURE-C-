@@ -4,15 +4,10 @@
 
 void ListInit(List *plist)
 {
-  plist->head = (Node *)malloc(sizeof(Node)); // Make Dummy Node
+  plist->head = (Node *)malloc(sizeof(Node));
   plist->head->next = NULL;
   plist->comp = NULL;
   plist->numOfData = 0;
-}
-
-void SetSortRule(List *plist, int (*comp)(LData d1, LData d2))
-{
-  plist->comp = comp;
 }
 
 void FInsert(List *plist, LData data)
@@ -29,9 +24,9 @@ void FInsert(List *plist, LData data)
 void SInsert(List *plist, LData data)
 {
   Node *newNode = (Node *)malloc(sizeof(Node));
-  Node *pred = plist->head; // pointing Dummy Node
-
+  Node *pred = plist->head; // 더미를 가리 킴.
   newNode->data = data;
+
   while (pred->next != NULL && plist->comp(data, pred->next->data) != 0)
   {
     pred = pred->next;
@@ -55,8 +50,9 @@ int LFirst(List *plist, LData *pdata)
 {
   if (plist->head->next == NULL)
     return FALSE;
-  plist->before = plist->head;    // pointing Dummy Node
-  plist->cur = plist->head->next; // pointing First Node
+
+  plist->before = plist->head;
+  plist->cur = plist->head->next;
 
   *pdata = plist->cur->data;
   return TRUE;
@@ -76,8 +72,8 @@ int LNext(List *plist, LData *pdata)
 
 LData LRemove(List *plist)
 {
-  Node *rpos = plist->cur;  // adress
-  LData rdata = rpos->data; // value
+  Node *rpos = plist->cur;
+  LData rdata = rpos->data;
 
   plist->before->next = plist->cur->next;
   plist->cur = plist->before;
@@ -90,4 +86,9 @@ LData LRemove(List *plist)
 int LCount(List *plist)
 {
   return plist->numOfData;
+}
+
+void SetSortRule(List *plist, int (*comp)(LData d1, LData d2))
+{
+  plist->comp = comp;
 }

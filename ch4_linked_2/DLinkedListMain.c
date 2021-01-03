@@ -1,11 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "DLinkedList.h"
 #include "DLinkedList.c"
 
 int WhoIsPrecede(int d1, int d2)
 {
-  return (d1 < d2) ? 0 : 1;
+  if (d1 > d2)
+    return 1;
+  else
+    return 0;
 }
 
 int main(void)
@@ -15,19 +17,27 @@ int main(void)
   ListInit(&list);
   SetSortRule(&list, WhoIsPrecede);
 
-  // Save 5 data
-  LInsert(&list, 33);
-  LInsert(&list, 22);
-  LInsert(&list, 11);
-  LInsert(&list, 55);
-  LInsert(&list, 44);
+  // 데이터 저장
+  for (int i = 0; i < 5; i++)
+    LInsert(&list, (11 * (i + 1)));
 
-  printf("Count of Data: %d \n", LCount(&list));
+  // 데이터 출력
+  printf("현재 데이터의 수: %d \n", LCount(&list));
 
-  // Remove
   if (LFirst(&list, &data))
   {
-    printf("%d ", data);
+    printf("%d, ", data);
+
+    while (LNext(&list, &data))
+      printf("%d, ", data);
+  }
+  printf("\n\n");
+
+  // 숫자 22만 삭제
+  if (LFirst(&list, &data))
+  {
+    if (data == 22)
+      LRemove(&list);
 
     while (LNext(&list, &data))
     {
@@ -36,15 +46,17 @@ int main(void)
     }
   }
 
-  // Print Remains after Remove
-  printf("Remains: %d \n", LCount(&list));
+  // 삭제 후 남아있는 데이터 전체 출력
+  printf("현재 남아있는 데이터의 수: %d\n", LCount(&list));
 
   if (LFirst(&list, &data))
   {
-    printf("%d ", data);
+    printf("%d, ", data);
 
     while (LNext(&list, &data))
-      printf("%d ", data);
+    {
+      printf("%d, ", data);
+    }
   }
   printf("\n\n");
   return 0;
